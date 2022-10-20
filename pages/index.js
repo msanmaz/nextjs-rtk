@@ -1,11 +1,15 @@
 import Head from 'next/head'
-import { getUserId, getUsers } from '../lib/slice/testSlice';
+import { getUserId, getUsers,drawerSet } from '../lib/slice/testSlice';
 import { wrapper } from '../lib/store'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 export default function Home() {
   const dispatch = useDispatch()
   const selector = useSelector(state => state.productSlice)
+  const handler = (e) => {
+    e.preventDefault()
+    dispatch(drawerSet())
+  }
   return (
     <div>
       <Head>
@@ -16,7 +20,7 @@ export default function Home() {
     <div className='w-full h-[4rem] bg-purple-500 flex justify-start'>
       <p className='text-white'>RTK</p>
     </div>
-    
+    <button onClick={handler}>Test!</button>
 
     
     </div>
@@ -27,5 +31,4 @@ export default function Home() {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({req, res}) => {
  await store.dispatch(getUsers());
- await store.dispatch(getUserId(1))
 });
